@@ -177,11 +177,13 @@ func prepareTemplateData(datamodel *dmmf.Datamodel, cfg *config.Config) *Templat
 
 // buildJSONTag creates the json struct tag for a field.
 func buildJSONTag(f *dmmf.Field, cfg *config.Config) string {
+	tag := f.Name
+
+	// Relations always get omitempty since they're manually populated
 	if f.IsRelation() {
-		return `json:"-"`
+		return fmt.Sprintf(`json:"%s,omitempty"`, tag)
 	}
 
-	tag := f.Name
 	if !f.IsRequired && cfg.JSONOmitempty {
 		tag += ",omitempty"
 	}
