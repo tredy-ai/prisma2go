@@ -54,12 +54,12 @@ func (tm *TypeMapper) mapBaseType(field *dmmf.Field) (string, []Import) {
 	if field.Kind == "object" && !tm.enumNames[field.Type] {
 		// This is either a relation or a composite type
 		// Relations are handled by the model name directly
-		return field.Type, nil
+		return ToPascalCase(field.Type), nil
 	}
 
 	// Enums
 	if field.IsEnum() {
-		return field.Type, nil
+		return ToPascalCase(field.Type), nil
 	}
 
 	// Check for native type overrides

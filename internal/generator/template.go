@@ -78,17 +78,18 @@ func prepareTemplateData(datamodel *dmmf.Datamodel, cfg *config.Config) *Templat
 	// Process enums
 	enums := make([]EnumData, 0, len(datamodel.Enums))
 	for _, e := range datamodel.Enums {
+		enumName := ToPascalCase(e.Name)
 		values := make([]EnumValueData, 0, len(e.Values))
 		for _, v := range e.Values {
 			values = append(values, EnumValueData{
-				ConstName: ToEnumConstName(e.Name, v.Name),
+				ConstName: ToEnumConstName(enumName, v.Name),
 				RawName:   v.Name,
 			})
 		}
 		enums = append(enums, EnumData{
-			Name:    e.Name,
+			Name:    enumName,
 			Values:  values,
-			Trimmed: e.Name,
+			Trimmed: enumName,
 		})
 	}
 
@@ -148,7 +149,7 @@ func prepareTemplateData(datamodel *dmmf.Datamodel, cfg *config.Config) *Templat
 		}
 
 		models = append(models, ModelData{
-			Name:          m.Name,
+			Name:          ToPascalCase(m.Name),
 			TableName:     m.GetDBName(),
 			Documentation: docComment,
 			Fields:        fields,
