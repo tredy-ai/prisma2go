@@ -1,0 +1,4 @@
+.idea/
+.claude/
+/prisma2go
+!/cmd/prisma2go
