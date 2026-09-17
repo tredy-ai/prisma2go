@@ -126,7 +126,7 @@ func prepareTemplateData(datamodel *dmmf.Datamodel, cfg *config.Config) *Templat
 
 			var docComment string
 			if f.Documentation != nil {
-				docComment = *f.Documentation
+				docComment = strings.ReplaceAll(*f.Documentation, "\n", "\n\t// ")
 			}
 
 			fields = append(fields, FieldData{
@@ -145,7 +145,7 @@ func prepareTemplateData(datamodel *dmmf.Datamodel, cfg *config.Config) *Templat
 
 		var docComment string
 		if m.Documentation != nil {
-			docComment = *m.Documentation
+			docComment = strings.ReplaceAll(*m.Documentation, "\n", "\n// ")
 		}
 
 		models = append(models, ModelData{
